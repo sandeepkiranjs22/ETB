@@ -1,0 +1,107 @@
+motor_insurance:
+
+  multi-vehicle collision:
+
+    - attribute: income
+      type: non-list
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: non-list
+      required_values:
+        min: 20
+        max: False
+        
+    - attribute: policy_annual_premium
+      type: non-list
+      required_values:
+        min: 30
+        max: False  
+
+    - attribute: vehicle_age_yrs
+      type: non-list
+      required_values:
+        min: False
+        max: 20
+
+  parked car:
+
+    - attribute: income
+      type: non-list
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: non-list
+      required_values:
+        min: 20
+        max: 55
+        
+    - attribute: policy_annual_premium
+      type: non-list 
+      required_values:
+        min: 30
+        max: False  
+
+    - attribute: vehicle_age_yrs
+      type: non-list
+      required_values:
+        min: False
+        max: 20
+
+
+  single vehicle collision:
+
+    - attribute: income
+      type: non-list
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: non-list
+      required_values:
+        min: 20
+        max: False
+        
+    - attribute: policy_annual_premium
+      type: non-list 
+      required_values:
+        min: 30
+        max: False  
+
+    - attribute: vehicle_age_yrs
+      type: non-list 
+      required_values:
+        min: False
+        max: False
+
+
+  vehicle theft:
+
+    - attribute: income
+      type: non-list 
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: non-list
+      required_values:
+        min: 20
+        max: False
+        
+    - attribute: policy_annual_premium
+      type: non-list
+      required_values:
+        min: 30
+        max: False  
+
+    - attribute: vehicle_age_yrs
+      type: non-list
+      required_values:
+        min: False
+        max: False

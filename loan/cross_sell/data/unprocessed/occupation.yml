@@ -1,0 +1,107 @@
+occupation:
+
+  lawyer:
+      
+    - attribute: income
+      type: int
+      required_values:
+        min: False
+        max: 500000
+
+    - attribute: self_employed
+      type: list
+      values: ['Yes']
+
+    - attribute: years_of_experience
+      type: int
+      required_values:
+        min: 5
+        max: False
+
+    - attribute: number_of_private_firms
+      type: int
+      required_values:
+        min: 6
+        max: False
+
+    - attribute: score
+      type: int
+      required_values:
+        min: 0.6
+        max: 0.8
+   
+   
+  doctor:
+   
+    - attribute: income
+      type: int
+      required_values:
+        min: False
+        max: 700000
+
+    - attribute: self_employed
+      type: list
+      values: ['Yes']
+
+    - attribute: years_of_experience
+      type: int
+      required_values:
+        min: 5
+        max: False
+
+    - attribute: number_of_private_clinics
+      type: int
+      required_values:
+        min: 3
+        max: False
+
+    - attribute: score
+      type: int
+      required_values:
+        min: 0.5
+        max: 0.7
+   
+  business:
+   
+    - attribute: income
+      type: int
+      required_values:
+        min: False
+        max: 500000
+
+    - attribute: self_employed
+      type: list
+      values: ['Yes']
+
+    - attribute: years_of_experience
+      type: int
+      required_values:
+        min: 5
+        max: False
+
+    - attribute: score
+      type: int
+      required_values:
+        min: 0.7
+        max: 0.9
+
+
+  others:
+
+    - attribute: income
+      type: int
+      required_values:
+        min: False
+        max: 300000
+
+    - attribute: years_of_experience
+      type: int
+      required_values:
+        min: 5
+        max: False
+
+    - attribute: score
+      type: int
+      required_values:
+        min: 0.3
+        max: 0.5
