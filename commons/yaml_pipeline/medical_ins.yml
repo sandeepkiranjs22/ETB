@@ -1,0 +1,83 @@
+medical_insurance:
+
+  cardiovascular:
+
+    - attribute: income
+      type: int
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: int
+      required_values:
+        min: 30
+        max: False    
+
+    - attribute: bmi
+      type: int
+      required_values:
+        min: False
+        max: 30        
+  
+  illness:
+
+    - attribute: income
+      type: int
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: int
+      required_values:
+        min: 34
+        max: False 
+
+    
+    - attribute: bmi
+      type: int
+      required_values:
+        min: False
+        max: False
+
+
+  mental health:
+
+    - attribute: income
+      type: int
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: int
+      required_values:
+        min: 30
+        max: False    
+
+    - attribute: bmi
+      type: int
+      required_values:
+        min: False
+        max: False    
+  
+  dental:
+
+    - attribute: income
+      type: int
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: int
+      required_values:
+        min: 34
+        max: False 
+
+    - attribute: bmi
+      type: int
+      required_values:
+        min: False
+        max: False    

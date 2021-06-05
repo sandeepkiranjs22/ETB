@@ -1,0 +1,57 @@
+travel_insurance:
+
+  rental vehicle excess insurance:
+
+    - attribute: income
+      type: int
+      required_values:
+        min: 25000
+        max: False
+    
+    - attribute: age
+      type: int
+      required_values:
+        min: 30
+        max: False    
+
+    - attribute : agency    
+      type: list
+      values: ['cwt','epx'] 
+
+  ticket protector:
+
+    - attribute: income
+      type: int
+      required_values:
+        min: 155000
+        max: False
+
+    - attribute: age
+      type: int
+      required_values:
+        min: 30
+        max: False    
+
+
+    - attribute : agency    
+      type: list
+      values: [ 'jzi' , 'epx'] 
+
+  cancellation plan:
+
+    - attribute: income
+      type: int  
+      required_values:
+        min: 125000
+        max: False
+    
+    - attribute: age
+      type: int
+      required_values:
+        min: 30
+        max: False    
+
+    - attribute : agency    
+      type: list
+      values: [ 'jzi' , 'cwt'] 
+    
