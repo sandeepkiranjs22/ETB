@@ -128,6 +128,16 @@ Dask is a fault-tolerant, elastic framework for parallel computation in python t
 
 . Here , there is a generic template class, which has all the function modules required for pre-processing irrespective of the ETB-Use Case
 
+. Modules present under this are : 
+
+ . Derived Data Calculation
+ . Handling Missing Data
+ . Outlier Detection
+ . Feature Scaling
+ . Correlation Analysis
+ . Feature Importance 
+
+
 . Folder Name: preprocessing_pipeline
 
 
@@ -138,14 +148,17 @@ class DataPreprocess:
         """loads data"""
         df = pd.read_csv(data_file)
         self.df = df
-
+    
+    ## function to get the dataframe
     def get_df(self):
         return self.df
 
+    ## function to drop columns
     def drop_column(self,data,col):
         data.drop(col,axis=1,inplace=True)
         return data
         
+    ## function to change all column names to lower and eliminate whitespace in column names
     def format_column_name(self, dataset):
         """Changing all column names to lower and eliminate whitespace"""
 
@@ -155,6 +168,7 @@ class DataPreprocess:
             cols = [re.sub('[\W_]+', '_', x) for x in cols]
         return cols
     
+    # Function to return data type information about dataframe
     def check_dtype(self, dataset):
         """returns a dataframe listing all column names"""
         cols = dataset.columns
@@ -169,6 +183,7 @@ class DataPreprocess:
         df = pd.DataFrame(info)
         return df
 
+    # Function to return all columns which are of object type
     def get_obj_col_list(self, df):
         obj_cols = []
         for col in df.columns:
@@ -176,6 +191,7 @@ class DataPreprocess:
                 obj_cols.append(col)
         return obj_cols
 
+    # Function to return all columns which are of non-object type
     def get_nonobj_col_list(self, df):
         nonobj_cols = []
         for col in df.columns:
@@ -183,12 +199,14 @@ class DataPreprocess:
                 nonobj_cols.append(col)
         return nonobj_cols
 
+    # Function to convert data to lower case for all categorical columns
     def convert_data_to_lowercase(self, df, col_list):
         """cols_list = categorical cols list to lowercase all entries"""
         for col in col_list:
             df[col] = df[col].str.lower()
         return df
 
+    # Function to return all unique values present in the columns of the dataframe
     def get_unique_col_values(self, dataset):
         """returns """
         cols = dataset.columns
@@ -207,6 +225,7 @@ class DataPreprocess:
 
     """CALCULATE DERIVED ATTRIBUTES"""
 
+    # Function to return age from dob column
     def calculate_age(self, born):
         """usage - calculate_age(date(1980, 5, 26))"""
         today = date.today()
@@ -227,6 +246,7 @@ class DataPreprocess:
             df.drop(dob_col, axis=1, inplace=True)
             return df
 
+    # Function to calculate time span of customer
     def calculate_customer_since(self, oldest_trans):
         today = date.today()
         years = today.year - oldest_trans.year - ((today.month, today.day) < (oldest_trans.month, oldest_trans.day))
@@ -271,6 +291,7 @@ class DataPreprocess:
 
     #zip code -> lat , long -> finding dist between address and bank
 
+    # Function to calculate distance from customer address to bank using pre-defined apis which computes distance
     def zipcode_distance_retrieval(self,col,country):
         
         list_dist=[]
@@ -508,6 +529,7 @@ class DataPreprocess:
         return data
 
 
+    # Function to find  single limit and total limit depending on CSL ( Example: 25/100 )
     def policy_csl_func(self,data,col,split_on):
     
         data['bodily_injury_single_limit']=""
@@ -528,6 +550,7 @@ class DataPreprocess:
         
         return data
 
+    # Function to calculate the total net captial
     def net_amt(self,data,col1,col2):
     
         data['net_captial']=""
@@ -542,6 +565,8 @@ class DataPreprocess:
         
         return data
 
+
+    # Function to calculate Severity and assign numbers to the categorical columns
     def severity_ordinal(self,data,col1):
     
         col_list=[]
@@ -565,6 +590,7 @@ class DataPreprocess:
         return data
 
     
+    # Function to convert time to morning/evening/night
     def hour_segment(self,data2,col):
         
         
@@ -586,6 +612,7 @@ class DataPreprocess:
         
         return data2
 
+    # Function used for bucket segmenting
     def witness_bucket_segment(self,data,col):
     
         val=[]
@@ -600,6 +627,7 @@ class DataPreprocess:
         return data
 
 
+    # Function to convert cars of customer to ordinal values
     def auto_make_to_ordinal(self,data,col1,col2):
         
         prem_cars_list=['Mercedes','BMW','Audi']
@@ -817,6 +845,7 @@ class DataPreprocess:
         return data
         
 
+    # Function to calculate Span in years
     def get_years_old(self,data,col):
         
         data['years_auto_old']=""
@@ -845,6 +874,8 @@ class DataPreprocess:
         df.drop(vehicle_bought_in_col, axis=1, inplace=True)
         return df
 
+
+    # Function to Segment customers based on customer relationship time with bank
     def group_customer(self, df, customer_since_months_col, customer_rel_dur_segment):
         """"""
         """Usage - group_customer(customer_df, 'customer_since_months', 'customer_rel_dur_segment')"""
@@ -870,6 +901,8 @@ class DataPreprocess:
         df.drop(date_col, axis=1, inplace=True)
         return df
 
+
+    # Function to find the population of the city of customer
     def get_population(self, city):
         """USAGE - get_population("Mumbai")"""
         city = city.title()
@@ -939,12 +972,14 @@ class DataPreprocess:
 
     """HANDLE MISSING DATA"""
 
+    ### Function to give details on the number of missing values in every column	
     def get_missing_df(self, df):
         percent_missing = df.isnull().sum() * 100 / len(df)
         missing_value_df = pd.DataFrame({'column_name': df.columns, 'percent_missing': percent_missing})
         missing_value_df.sort_values('percent_missing', inplace=True)
         return missing_value_df
 
+    ### Function for handling missing values in object datatype	
     def object_datatype_missing_val(self, dataset, list_nonobject, col):
         """handling missing values in object type columns of the dataset"""
         """parameter - col is the column to be imputed"""
@@ -1043,6 +1078,8 @@ class DataPreprocess:
 
     """HANDLING CATEGORICAL DATA"""
 
+    ### Functions to handle categorical data columns and missing values in categorical columns 
+
     def get_cat_cols_unique_val_dict(self, df, obj_cols):
         """returns a dict with columns grouped by num_of_unique_values in them"""
         col_uniques_df = self.get_unique_col_values(df[obj_cols])
@@ -1090,6 +1127,8 @@ class DataPreprocess:
 
     """OUTLIER DETECTION"""
 
+    ### Functions which detailed information about outliers and outerlier detections
+	
     def outlier_detection(self, df):
         v = df.values
         mask = np.abs((v - v.mean(0)) / v.std(0)) > 2
@@ -1114,7 +1153,9 @@ class DataPreprocess:
     """FEATURE SCALING"""
 
     """Feature Scaling - dask functions used for scaling except log and custom scaler"""
-
+ 
+    ### Here , there are functions for standard scaling , log scaling and min max scaling etc
+	
     def standard_scaling(self, df, cols_list):
         scaler = StandardScaler()
         scaler.fit(df[cols_list])
@@ -1190,6 +1231,7 @@ class DataPreprocess:
 
     """Feature Importance"""
 
+
     def xgb_feature_importance(self, X_train, y_train, X_test, y_test, param, rounds):
         """X_train etc. coming from a train_test_split function."""
 
@@ -1224,14 +1266,17 @@ class ModelTraining:
         df = pd.read_csv(data_file)
         self.df = df
 
+    # Function 	to get back the dataframe
     def get_df(self):
         return self.df
 
+    # Function 	to convert pandas dataframe to dask dataframe
     def convert_df_to_ddf(self, df):
         x = dd.from_pandas(df, chunksize=50000)
         return x
 	
 
+    # Function to get a dictionary for a column value and see if it crosses the given threshold
     def dict_mapper(self,listc,name,threshold):
               
         list1=[]
@@ -1250,6 +1295,7 @@ class ModelTraining:
         return list1
 
 
+    # Function 	to get convert a binary target column (yes/no) to (1/0)
     def target_col(self,df,y):
         """ target column"""
         for i in range(len(df)):
@@ -1263,21 +1309,27 @@ class ModelTraining:
 	
     
     
+    # Function 	to encode columns in the dataframe , here send all columns other than target columns
     def label_encoding(self, y):
         """df should not contain the target column"""
         le = LabelEncoder()
         y = le.fit_transform(y)
         return y
 
+
+    # Function to convert target pandas column to target dask dataframe column
     def convert_target_col_to_dask_df(self, y):
         darr = dd.from_array(y)
         y = darr.to_frame()
         return y
 
+    # Function used for training dask-xgboost algorithm on training dataframe
     def dxgb_train(self, client, params, x, y):
         bst = dxgb.train(client, params, x, y)
         return bst
 
+
+    # Function 	to get back the list of all columns which are of non-object type
     def get_nonobj_col_list(self, df):
         nonobj_cols = []
         for col in df.columns:
@@ -1285,26 +1337,13 @@ class ModelTraining:
                 nonobj_cols.append(col)
         return nonobj_cols
 
-    def addoffer_churn_customers(self,df,cats,col_name1,col_name2,threshold):
-        
-        list_reco=[]
-        for i in range(len(df)):
-            if df[col_name1][i] > threshold:   
-                for j in cats:
-                    if df[j][i]==1:
-                        val=j.split("_")
-                        list_reco.append(str(val[3]) +":" + str(df[col_name1][i])) 
-                        
-            else:
-                list_reco.append("")
-
-        return list_reco
-
-
+    # Function 	to split dataset into training and testing
     def split_dataset(self, x, y, test_size=0.20):
         X_train, X_test, y_train, y_test = train_test_split(x, y, random_state=123, test_size=test_size)
         return X_train, X_test, y_train, y_test
 
+
+    # Function for softmax
     def decode_softmax_to_label(self, prediction_array, reco_mapper, num):
         indexes = sorted(range(len(prediction_array)), key=lambda i: prediction_array[i], reverse=True)[:num]
         if num == 1:
