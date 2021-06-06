@@ -131,10 +131,15 @@ Dask is a fault-tolerant, elastic framework for parallel computation in python t
 . Modules present under this are : 
 
  . Derived Data Calculation
+
  . Handling Missing Data
+
  . Outlier Detection
+
  . Feature Scaling
+
  . Correlation Analysis
+
  . Feature Importance 
 
 
